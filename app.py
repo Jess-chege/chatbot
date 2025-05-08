@@ -1,16 +1,16 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 
-# ✅ Replace with your real API key (keep private!)
-openai.api_key = "sk-..."  # Paste your OpenAI API key here
+# ✅ Replace this with your real API key
+client = OpenAI(api_key="sk-...")
 
-st.title("🧠 Simple OpenAI Chatbot")
+st.title("🧠 Simple Chatbot")
 st.write("Talk to the bot!")
 
 user_input = st.text_input("You:", "")
 
 if user_input:
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "user", "content": user_input}
