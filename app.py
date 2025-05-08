@@ -10,9 +10,6 @@ responses = {
     "what is your name": "I am your friendly chatbot. You can call me ChatBot!",
     "what can you do": "I can answer simple questions and have small chats with you. Try asking me more!",
     "thank you": "You're welcome! 😊 Let me know if you need anything else.",
-    "how old are you": "I'm ageless! I was just created to help you. 😄",
-    "where are you from": "I don't have a hometown, but I live here in this chatbot interface!",
-    "tell me a joke": "Sure! Why don't skeletons fight each other? They don't have the guts! 😄",
     "default": "Sorry, I didn't quite get that. Try asking something else!"
 }
 
@@ -30,15 +27,15 @@ st.set_page_config(page_title="ChatBot", page_icon=":robot_face:", layout="wide"
 # Custom header
 st.markdown("""
     <h1 style='text-align: center; color: #4CAF50;'>Welcome to Your Personal Chatbot</h1>
-    <p style='text-align: center; color: #607D8B;'>Let's chat! I'm here to assist you with simple responses and fun conversations.</p>
+    <p style='text-align: center; color: #607D8B;'>Let's have a quick chat! I'm here to assist you with simple responses.</p>
 """, unsafe_allow_html=True)
 
 # Initialize the chat history to keep track of the conversation
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-# User input: Text area to allow more space to type messages
-user_input = st.text_area("You:", "", height=200, key="input", max_chars=500)
+# User input: Smaller text input box for short responses
+user_input = st.text_input("You:", "", max_chars=100, key="input")
 
 # If the user has typed something, process the input
 if user_input:
@@ -49,4 +46,3 @@ if user_input:
 # Display the ongoing chat conversation
 for speaker, message in st.session_state.chat_history:
     st.write(f"**{speaker}:** {message}")
-
