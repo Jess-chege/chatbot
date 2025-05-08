@@ -34,7 +34,7 @@ if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
 # User input
-user_input = st.text_input("You:", key="input")
+user_input = st.text_area("You:", "", height=100, key="input")
 
 if user_input:
     bot_response = get_response(user_input)
@@ -44,5 +44,6 @@ if user_input:
 # Display chat history
 for speaker, message in st.session_state.chat_history:
     st.write(f"**{speaker}:** {message}")
+
 
 
