@@ -1,21 +1,37 @@
 import streamlit as st
-from openai import OpenAI
 
-# ✅ Replace this with your real API key
-client = OpenAI(api_key="sk-...")
+# Define basic responses
+responses = {
+    "hello": "Hi there! How can I help you?",
+    "how are you": "I'm just a bot, but I'm doing great!",
+    "bye": "Goodbye! Have a nice day!",
+    "help": "You can ask me about basic things like 'hello', 'how are you', or say 'bye'."
+}
 
-st.title("🧠 Simple Chatbot")
-st.write("Talk to the bot!")
+# Basic chatbot logic
+def get_response(user_input):
+    user_input = user_input.lower()
+    for key in responses:
+        if key in user_input:
+            return responses[key]
+    return "I'm not sure how to respond to that. Try saying 'help'."
 
-user_input = st.text_input("You:", "")
+# Streamlit app
+st.title("Simple Chatbot (No OpenAI)")
+
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+
+# User input
+user_input = st.text_input("You:", key="input")
 
 if user_input:
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "user", "content": user_input}
-        ]
-    )
-    st.write("🤖:", response.choices[0].message.content)
+    bot_response = get_response(user_input)
+    st.session_state.chat_history.append(("You", user_input))
+    st.session_state.chat_history.append(("Bot", bot_response))
+
+# Display chat history
+for speaker, message in st.session_state.chat_history:
+    st.write(f"**{speaker}:** {message}")
 
 
